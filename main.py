@@ -4,8 +4,8 @@ import pandas as pd
 
 
 def remove_blank_rows():
-    df = pd.read_csv('femaleAthletesOpen.csv')
-    df.to_csv('maleAthletesOpen2.csv', index=False)
+    df = pd.read_csv('femaleAthletesqf.csv')
+    df.to_csv('femaleAthletesqf2.csv', index=False)
 
 
 def setup_data_qf(url):
@@ -18,7 +18,7 @@ def setup_data_qf(url):
 
     for page in range(2, total_pages + 1):
         url = 'https://c3po.crossfit.com/api/competitions/v2/competitions/quarterfinalsindividual/2022/leaderboards' \
-              '?division=1&region=0&sort=0&page='+str(page)
+              '?division=2&region=0&sort=0&page='+str(page)
         page_data = requests.get(url).json()
 
         for athlete in page_data['leaderboardRows']:
@@ -28,7 +28,7 @@ def setup_data_qf(url):
                    'age', 'weight', 'height', 'QFOneScore', 'QFOneRank',
                    'QFTwoScore', 'QFTwoRank', 'QFThreeScore', 'QFThreeRank',
                    'QFFourScore', 'QFFourRank', 'QFFiveScore', 'QFFiveRank']
-    csv_file = "maleAthletes.csv"
+    csv_file = "femaleAthletesqf.csv"
     try:
         with open(csv_file, 'w', encoding="utf-8") as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
@@ -129,8 +129,8 @@ def curate_athlete_data_open(athlete_info_raw):
 
 if __name__ == '__main__':
     # quarterfinals
-    # setup_data_qf('https://c3po.crossfit.com/api/competitions/v2/competitions/quarterfinalsindividual/2022/leaderboards'
-    #               '?division=2&region=0&sort=0')
+    setup_data_qf('https://c3po.crossfit.com/api/competitions/v2/competitions/quarterfinalsindividual/2022/leaderboards'
+                  '?division=2&region=0&sort=0')
 
     # open
     # setup_data_open('https://c3po.crossfit.com/api/competitions/v2/competitions/open/2022/leaderboards?view=0'
